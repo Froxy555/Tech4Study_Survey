@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="kislogo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>II. Technológiai Innovációs Konferencia 2024. Kérdőív</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-purple: rgba(83,81,158,255);
+            --light-green: #c1da62;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--main-purple);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .fooldal-button {
+            background-color: var(--main-purple);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .fooldal-button:hover {
+            background-color: var(--light-green);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .keret {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin: 20px 0;
+            color: var(--main-purple);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: var(--main-purple);
+            font-weight: 700;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            margin: 10px;
+            flex: 1 1 20%;
+            min-width: 80px;
+            position: relative;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .emoji-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .emoji {
+            font-size: 2em;
+            margin-bottom: 5px;
+            transition: transform 0.2s ease;
+        }
+
+        label:hover .emoji {
+            transform: scale(1.1);
+        }
+
+        .text {
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        input[type="radio"]:checked + .emoji-container.very-satisfied {
+    background-color: #c2d75e;
+}
+
+input[type="radio"]:checked + .emoji-container.satisfied {
+    background-color: #cfe083;
+}
+
+input[type="radio"]:checked + .emoji-container.not-satisfied {
+    background-color: #dce9a8;
+}
+
+input[type="radio"]:checked + .emoji-container.very-unsatisfied {
+    background-color: #e9f2cd;
+}
+
+
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2em;
+            background-color: var(--main-purple);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .submit-button:hover {
+            background-color: var(--light-green);
+        }
+
+        .opinion-field textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--main-purple);
+            border-radius: 5px;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            h2 {
+                font-size: 1.1em;
+            }
+            .emoji {
+                font-size: 1.8em;
+            }
+            .text {
+                font-size: 0.8rem;
+            }
+            .options {
+                justify-content: space-around;
+            }
+            label {
+                flex: 1 1 40%;
+            }
+        }
+        .logo-link {
+    text-decoration: none;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.fooldal-button {
+    background-color: var(--main-purple);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.fooldal-button:hover {
+    background-color: var(--light-green);
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <a href="https://tech4study.hu" class="logo-link">
+            <img src="szoveg_logo.png" alt="Tech4Study Logo" class="logo">
+        </a>
+        <a href="/index.html" class="fooldal-button">FŐOLDAL</a>
+    </header>
+
+    <div class="container">
+        <h1>II. Technológiai Innovációs Konferencia 2024.</h1>
+        <h2 style="text-align: center; margin-bottom: 30px;"> Technológiai intelligencia a tehetség kibontakoztatásában</h2>
+        
+        <div class="keret">
+            <h2> Mennyire volt elégedett a témaválasztással?</h2>
+            <div class="options">
+                <label>
+                    <input type="radio" name="satisfaction1" value="very-unsatisfied">
+                    <div class="emoji-container very-unsatisfied">
+                        <span class="emoji">😠</span>
+                        <span class="text">Egyáltalán nem</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="satisfaction1" value="not-satisfied">
+                    <div class="emoji-container not-satisfied">
+                        <span class="emoji">🙁</span>
+                        <span class="text">Inkább nem</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="satisfaction1" value="satisfied">
+                    <div class="emoji-container satisfied">
+                        <span class="emoji">🙂</span>
+                        <span class="text">Inkább igen</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="satisfaction1" value="very-satisfied">
+                    <div class="emoji-container very-satisfied">
+                        <span class="emoji">😀</span>
+                        <span class="text">Nagyon!</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="keret">
+            <h2>Mennyire volt informatív ez a témakör az Ön számára?</h2>
+            <div class="options">
+                <label>
+                    <input type="radio" name="satisfaction2" value="very-unsatisfied">
+                    <div class="emoji-container very-unsatisfied">
+                        <span class="emoji">😠</span>
+                        <span class="text">Egyáltalán nem</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="satisfaction2" value="not-satisfied">
+                    <div class="emoji-container not-satisfied">
+                        <span class="emoji">🙁</span>
+                        <span class="text">Inkább nem</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="satisfaction2" value="satisfied">
+                    <div class="emoji-container satisfied">
+                        <span class="emoji">🙂</span>
+                        <span class="text">Inkább igen</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="satisfaction2" value="very-satisfied">
+                    <div class="emoji-container very-satisfied">
+                        <span class="emoji">😀</span>
+                        <span class="text">Nagyon!</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="keret">
+            <h2> Mennyiben időszerű ez a téma?</h2>
+            <div class="options">
+                <label>
+                    <input type="radio" name="satisfaction3" value="very-unsatisfied">
+                    <div class="emoji-container very-unsatisfied">
+                        <span class="emoji">😠</span>
+                        <span class="text">Egyáltalán nem</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="satisfaction3" value="not-satisfied">
+                    <div class="emoji-container not-satisfied">
+                        <span class="emoji">🙁</span>
+                        <span class="text">Inkább nem</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="satisfaction3" value="satisfied">
+                    <div class="emoji-container satisfied">
+                        <span class="emoji">🙂</span>
+                        <span class="text">Inkább igen</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="satisfaction3" value="very-satisfied">
+                    <div class="emoji-container very-satisfied">
+                        <span class="emoji">😀</span>
+                        <span class="text">Nagyon!</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="keret">
+            <h2>Mondja el véleményét! (Opcionális, max. 50 karakter)</h2>
+            <div class="opinion-field">
+                <textarea id="opinion" name="opinion" placeholder="Írja ide a véleményét..." maxlength="50"></textarea>
+            </div>
+        </div>
+
+        <button id="submitButton" class="submit-button">Beküld</button>
+    </div>
+
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function() {
+            const satisfaction1 = document.querySelector('input[name="satisfaction1"]:checked');
+            const satisfaction2 = document.querySelector('input[name="satisfaction2"]:checked');
+            const satisfaction3 = document.querySelector('input[name="satisfaction3"]:checked');
+            const opinion = document.getElementById('opinion').value;
+
+            if (!satisfaction1 || !satisfaction2 || !satisfaction3) {
+                alert('Kérjük, válaszoljon minden kérdésre!');
+                return;
+            }
+
+            const badWords = ['szar', 'geci', 'fasz', 'kurva', 'baszd', 'bazdmeg', 'baszki', 'baszás',
+                'pina', 'punci', 'fing', 'segg', 'seggfej', 'fos', 'szopás', 'szopjál',
+                'bunkó', 'hülye', 'hülyeség', 'marha', 'marhaság', 'barom', 'faszfej',
+                'anyád', 'anyádat', 'apád', 'apádat', 'köcsög', 'köcsögség', 'picsa',
+                'ribanc', 'ringyó', 'rohadék', 'szaros', 'szarság', 'tahó',
+                'buzi', 'buzis', 'cigány', 'nigger', 'nyomorék', 'nyomorult', 'pöcs',
+                'pöcsfej', 'faszkalap', 'faszparaszt', 'gecis', 'kurvára', 'lófasz',
+                'baszódj', 'baszott', 'kibaszott', 'elbaszott', 'felbaszott',
+                'szarrágó', 'fospumpa', 'szopós', 'szopd', 'szopjad', 'bassza', 'basszus',
+                'faszom', 'faszba', 'faszt', 'faszért', 'fasznak', 'fasszopó',
+                'fasztarisznya', 'fasztolvaj', 'fingós', 'fostos', 'genny', 'gennyes',
+                'genyó', 'húgyagyú', 'hugyos', 'kretén', 'kreténség', 'kurafi',
+                'kurvapecér', 'lófaszt', 'lószar', 'mocsok', 'pöcsöm', 'pöcsbe',
+                'pöcsöt', 'pöcsért', 'pöcsnek', 'picsába', 'picsáért', 'picsának',
+                'fing', 'fingós', 'szarnivaló', 'szarzsák', 'szarházi', 'tökfej',
+                'tökkelütött', 'fater', 'muter', 'anyuci', 'apuci', 'anyucid',
+                'apucid', 'gyökér', 'gyoker', 'foshalmaz', 'szardarab', 'szarfaszú',
+                'picsafüst', 'faszfej', 'fasztarisznya', 'fasztengely', 'faszcibáló',
+                'bunkókám', 'faszkalap', 'faszkeringő', 'fasztarisznya', 'hülyegyerek'];
+
+            if (badWords.some(word => opinion.toLowerCase().includes(word))) {
+                alert('Kérlek, kulturáltan fejezd ki véleményed!');
+                return;
+            }
+
+            const data = {
+                satisfaction1: satisfaction1.value,
+                satisfaction2: satisfaction2.value,
+                satisfaction3: satisfaction3.value,
+                opinion: opinion
+            };
+
+            fetch('/.netlify/functions/api/submit-survey/4', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    window.location.href = '/results4.html';
+                } else {
+                    throw new Error('Sikertelen beküldés');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Hiba történt a küldés során. Kérjük, próbálja újra később.');
+            });
+        });
+    </script>
+</body>
+</html>

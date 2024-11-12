@@ -1,0 +1,9 @@
+[build]
+  command = "# Add build command if needed"
+  publish = "public"
+  functions = "functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

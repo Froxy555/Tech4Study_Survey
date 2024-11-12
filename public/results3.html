@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="tech4study" href="kislogo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>II. Technológiai Innovációs Konferencia 2024. - Eredmények</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-purple: rgba(83,81,158,255);
+            --light-green: #c1da62;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--main-purple);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .fooldal-button {
+            background-color: var(--main-purple);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .fooldal-button:hover {
+            background-color: var(--light-green);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .thank-you-message {
+            text-align: center;
+            margin: 20px 0;
+            padding: 0 20px;
+            font-size: 1.2em;
+            color: var(--main-purple);
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--main-purple);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        #resultsChart {
+            width: 100%;
+            height: auto;
+            min-height: 300px;
+        }
+
+        .opinions-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .opinions-container h2 {
+            color: var(--main-purple);
+            margin-top: 0;
+            font-weight: 700;
+        }
+
+        .opinion {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            font-style: italic;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: var(--main-purple);
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            .thank-you-message {
+                font-size: 1em;
+            }
+            .chart-container, 
+            .opinions-container {
+                padding: 10px;
+            }
+        }
+        .logo {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.fooldal-button {
+    background-color: var(--main-purple);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.fooldal-button:hover {
+    background-color: var(--light-green);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <a href="https://tech4study.hu" class="logo-link">
+            <img src="szoveg_logo.png" alt="Tech4Study Logo" class="logo">
+        </a>
+        <a href="/index.html" class="fooldal-button">FŐOLDAL</a>
+    </header>
+
+    <div class="container">
+        <div class="thank-you-message">
+            <h2>Eredmény</h2>
+            <p><strong>Köszönjük, hogy értékes véleményével hozzájárult konferenciánk színvonalának növeléséhez!</strong></p>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="resultsChart"></canvas>
+        </div>
+
+        <div class="opinions-container">
+            <h2>Vélemények</h2>
+            <div id="opinionsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        let chart;
+
+        function displayResults(results) {
+            const ctx = document.getElementById('resultsChart').getContext('2d');
+
+            const data = {
+                labels: ['Nagyon!', 'Inkább igen', 'Inkább nem', 'Egyáltalán nem'],
+                datasets: [
+                    {
+                        label: 'Téma',
+                        data: countResponses(results.satisfaction1 || []),
+                        backgroundColor: 'rgba(46, 139, 87, 0.7)',
+                        borderColor: 'rgba(46, 139, 87, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Informatív',
+                        data: countResponses(results.satisfaction2 || []),
+                        backgroundColor: 'rgba(60, 179, 113, 0.7)',
+                        borderColor: 'rgba(60, 179, 113, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Időszerű',
+                        data: countResponses(results.satisfaction3 || []),
+                        backgroundColor: 'rgba(144, 238, 144, 0.7)',
+                        borderColor: 'rgba(144, 238, 144, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            };
+
+            const options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.8)',
+                            font: {
+                                family: "'Montserrat', sans-serif",
+                                size: 10
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.8)',
+                            font: {
+                                family: "'Montserrat', sans-serif",
+                                size: 10
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'rgba(255, 255, 255, 0.8)',
+                            font: {
+                                family: "'Montserrat', sans-serif",
+                                size: 12
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Elégedettségi Felmérés Eredményei',
+                        color: 'rgba(255, 255, 255, 0.9)',
+                        font: {
+                            family: "'Montserrat', sans-serif",
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            };
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: options
+            });
+
+            const opinionsContainer = document.getElementById('opinionsContainer');
+            opinionsContainer.innerHTML = '';
+            if (results.opinions && results.opinions.length > 0) {
+                results.opinions.forEach(opinion => {
+                    const opinionElement = document.createElement('div');
+                    opinionElement.className = 'opinion';
+                    opinionElement.textContent = opinion;
+                    opinionsContainer.appendChild(opinionElement);
+                });
+            } else {
+                opinionsContainer.textContent = 'Még nincsenek vélemények.';
+            }
+        }
+
+        function countResponses(responses) {
+            const counts = {
+                'very-satisfied': 0,
+                'satisfied': 0,
+                'not-satisfied': 0,
+                'very-unsatisfied': 0
+            };
+
+            responses.forEach(response => {
+                counts[response] = (counts[response] || 0) + 1;
+            });
+
+            return Object.values(counts);
+        }
+
+        function fetchAndDisplayResults() {
+            fetch('/.netlify/functions/api/survey-results/3')
+                .then(response => response.json())
+                .then(results => {
+                    if (results.error) {
+                        console.error('Error fetching results:', results.error);
+                        return;
+                    }
+                    displayResults(results);
+                })
+                .catch(error => {
+                    console.error('Error fetching results:', error);
+                });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', fetchAndDisplayResults);
+
+        window.addEventListener('resize', function() {
+            if (chart) {
+                chart.resize();
+            }
+        });
+    </script>
+</body>
+</html>
