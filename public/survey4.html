@@ -361,6 +361,7 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
     </div>
 
     <script>
+        const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? '' : '/.netlify/functions/api';
         document.getElementById('submitButton').addEventListener('click', function() {
             const favoriteTalk = document.getElementById('favoriteTalk').value;
             const satisfaction1 = document.querySelector('input[name="satisfaction1"]:checked');
@@ -406,7 +407,7 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
                 opinion: opinion
             };
 
-            fetch('/submit-survey/4', {
+            fetch(`${API_BASE}/submit-survey/4`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
