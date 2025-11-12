@@ -2,6 +2,13 @@
   command = "# Add build command if needed"
   publish = "public"
   functions = "functions"
+
+# Ensure function paths are not intercepted by the SPA rewrite
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
