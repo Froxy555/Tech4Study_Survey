@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="tech4study" href="kislogo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>II. Technológiai Innovációs Konferencia 2024. - Eredmények</title>
+    <title>III. Technológiai Innovációs Konferencia 2025. - Eredmények</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -182,6 +182,11 @@
             <canvas id="resultsChart"></canvas>
         </div>
 
+        <div class="opinions-container" id="topVoteContainer">
+            <h2>Legtöbb szavazatot kapta</h2>
+            <div id="topVote"></div>
+        </div>
+
         <div class="opinions-container">
             <h2>Vélemények</h2>
             <div id="opinionsContainer"></div>
@@ -192,8 +197,8 @@
         let chart;
 
         function displayResults(results) {
+            // 1) Render bar chart (elégedettség)
             const ctx = document.getElementById('resultsChart').getContext('2d');
-
             const data = {
                 labels: ['Nagyon!', 'Inkább igen', 'Inkább nem', 'Egyáltalán nem'],
                 datasets: [
@@ -220,70 +225,34 @@
                     }
                 ]
             };
-
             const options = {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            color: 'rgba(255, 255, 255, 0.8)',
-                            font: {
-                                family: "'Montserrat', sans-serif",
-                                size: 10
-                            }
-                        },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            color: 'rgba(255, 255, 255, 0.8)',
-                            font: {
-                                family: "'Montserrat', sans-serif",
-                                size: 10
-                            }
-                        },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        }
-                    }
+                    y: { beginAtZero: true },
+                    x: {}
                 },
                 plugins: {
-                    legend: {
-                        labels: {
-                            color: 'rgba(255, 255, 255, 0.8)',
-                            font: {
-                                family: "'Montserrat', sans-serif",
-                                size: 12
-                            }
-                        }
-                    },
+                    legend: { display: true },
                     title: {
                         display: true,
-                        text: 'Elégedettségi Felmérés Eredményei',
-                        color: 'rgba(255, 255, 255, 0.9)',
-                        font: {
-                            family: "'Montserrat', sans-serif",
-                            size: 16,
-                            weight: 'bold'
-                        }
+                        text: 'Elégedettségi Felmérés Eredményei'
                     }
                 }
             };
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, { type: 'bar', data, options });
 
-            if (chart) {
-                chart.destroy();
-            }
+            // 2) Compute favorite talk top vote
+            const favs = results.favoriteTalk || [];
+            const counts = {};
+            favs.forEach(v => { if (!v) return; counts[v] = (counts[v] || 0) + 1; });
+            const entries = Object.entries(counts);
+            const top = entries.length ? entries.reduce((a, b) => (b[1] > a[1] ? b : a)) : null;
+            const topVoteEl = document.getElementById('topVote');
+            topVoteEl.textContent = top ? `${top[0]} — ${top[1]} szavazat` : 'Még nincs adat.';
 
-            chart = new Chart(ctx, {
-                type: 'bar',
-                data: data,
-                options: options
-            });
-
+            // 3) Render opinions
             const opinionsContainer = document.getElementById('opinionsContainer');
             opinionsContainer.innerHTML = '';
             if (results.opinions && results.opinions.length > 0) {
@@ -305,16 +274,14 @@
                 'not-satisfied': 0,
                 'very-unsatisfied': 0
             };
-
-            responses.forEach(response => {
+            (responses || []).forEach(response => {
                 counts[response] = (counts[response] || 0) + 1;
             });
-
             return Object.values(counts);
         }
 
         function fetchAndDisplayResults() {
-            fetch('/.netlify/functions/api/survey-results/1')
+            fetch('/survey-results/1')
                 .then(response => response.json())
                 .then(results => {
                     if (results.error) {
@@ -328,14 +295,7 @@
                 });
         }
 
-
         document.addEventListener('DOMContentLoaded', fetchAndDisplayResults);
-
-        window.addEventListener('resize', function() {
-            if (chart) {
-                chart.resize();
-            }
-        });
     </script>
 </body>
 </html>
