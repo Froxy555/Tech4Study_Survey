@@ -284,9 +284,12 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
     <script>
         document.getElementById('submitButton').addEventListener('click', function() {
             const satisfaction1 = document.querySelector('input[name="satisfaction1"]:checked');
-            const satisfaction2 = document.querySelector('input[name="satisfaction2"]:checked');
-            const satisfaction3 = document.querySelector('input[name="satisfaction3"]:checked');
             const opinion = document.getElementById('opinion').value;
+        
+            if (!satisfaction1) {
+                alert('Kérlek, válaszolj a kérdésre!');
+                return;
+        }
 
             
 
