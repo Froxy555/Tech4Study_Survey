@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="tech4study" href="kislogo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>II. Technológiai Innovációs Konferencia 2024. - Eredmények</title>
+    <title>III. Technológiai Innovációs Konferencia 2025. - Eredmények</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -182,6 +182,11 @@
             <canvas id="resultsChart"></canvas>
         </div>
 
+        <div class="opinions-container" id="topVoteContainer">
+            <h2>Legtöbb szavazatot kapta</h2>
+            <div id="topVote"></div>
+        </div>
+
         <div class="opinions-container">
             <h2>Vélemények</h2>
             <div id="opinionsContainer"></div>
@@ -220,6 +225,15 @@
                     }
                 ]
             };
+
+            // Compute favorite talk top vote
+            const favs = results.favoriteTalk || [];
+            const counts = {};
+            favs.forEach(v => { if (!v) return; counts[v] = (counts[v] || 0) + 1; });
+            const entries = Object.entries(counts);
+            const top = entries.length ? entries.reduce((a, b) => (b[1] > a[1] ? b : a)) : null;
+            const topVoteEl = document.getElementById('topVote');
+            topVoteEl.textContent = top ? `${top[0]} — ${top[1]} szavazat` : 'Még nincs adat.';
 
             const options = {
                 responsive: true,
@@ -314,7 +328,7 @@
         }
 
         function fetchAndDisplayResults() {
-            fetch('/.netlify/functions/api/survey-results/2')
+            fetch('/survey-results/2')
                 .then(response => response.json())
                 .then(results => {
                     if (results.error) {
