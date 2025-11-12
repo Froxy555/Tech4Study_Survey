@@ -99,6 +99,7 @@
             position: relative;
         }
 
+        /* Default radios hidden for emoji blocks; rating section overrides this */
         input[type="radio"] {
             display: none;
         }
@@ -111,6 +112,49 @@
             border-radius: 10px;
             transition: background-color 0.3s ease;
         }
+
+        /* Rating rows (survey5) */
+        .rating-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        .rating-row:last-child { border-bottom: none; }
+        .team-name {
+            font-weight: 700;
+            color: var(--main-purple);
+        }
+        .rating-group { display: flex; gap: 10px; }
+        .rating-option {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            flex: 0 0 auto;
+        }
+        .rating-option input[type="radio"] { display: none !important; }
+        .rating-option span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 32px;
+            border-radius: 8px;
+            font-weight: 700;
+            color: #263238;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+        .rating-option:hover span { transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+        .rating-option input[type="radio"]:checked + span { border: 2px solid var(--main-purple); box-shadow: 0 0 0 2px rgba(83,81,158,0.15); }
+        .rating-option.rate-1 span { background-color: #e9f2cd; }
+        .rating-option.rate-2 span { background-color: #dce9a8; }
+        .rating-option.rate-3 span { background-color: #cfe083; }
+        .rating-option.rate-4 span { background-color: #c2d75e; }
+        .rating-option.rate-5 span { background-color: #9ec43f; color: #1b2b16; }
 
         .emoji {
             font-size: 2em;
@@ -238,162 +282,97 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
         <h2 style="text-align: center; margin-bottom: 30px;">StarTECH - Így jutunk el a csillagokig</h2>
         
         <div class="keret">
-            <h2>Mennyire volt elégedett a témaválasztással?</h2>
-            <div class="options">
-                <label>
-                    <input type="radio" name="satisfaction1" value="very-unsatisfied">
-                    <div class="emoji-container very-unsatisfied">
-                        <span class="emoji">😠</span>
-                        <span class="text">Egyáltalán nem</span>
+            <h2>Értékeld a csapatok munkáját (1 = legrosszabb, 5 = legjobb)</h2>
+            <div>
+                <div class="rating-row">
+                    <div class="team-name">BankiDual</div>
+                    <div class="rating-group">
+                        <label class="rating-option rate-1"><input type="radio" name="bankiDual" value="1"><span>1</span></label>
+                        <label class="rating-option rate-2"><input type="radio" name="bankiDual" value="2"><span>2</span></label>
+                        <label class="rating-option rate-3"><input type="radio" name="bankiDual" value="3"><span>3</span></label>
+                        <label class="rating-option rate-4"><input type="radio" name="bankiDual" value="4"><span>4</span></label>
+                        <label class="rating-option rate-5"><input type="radio" name="bankiDual" value="5"><span>5</span></label>
                     </div>
-                </label>
-                <label>
-                    <input type="radio" name="satisfaction1" value="not-satisfied">
-                    <div class="emoji-container not-satisfied">
-                        <span class="emoji">🙁</span>
-                        <span class="text">Inkább nem</span>
+                </div>
+                <div class="rating-row">
+                    <div class="team-name">BánkiRobot</div>
+                    <div class="rating-group">
+                        <label class="rating-option rate-1"><input type="radio" name="bankiRobot" value="1"><span>1</span></label>
+                        <label class="rating-option rate-2"><input type="radio" name="bankiRobot" value="2"><span>2</span></label>
+                        <label class="rating-option rate-3"><input type="radio" name="bankiRobot" value="3"><span>3</span></label>
+                        <label class="rating-option rate-4"><input type="radio" name="bankiRobot" value="4"><span>4</span></label>
+                        <label class="rating-option rate-5"><input type="radio" name="bankiRobot" value="5"><span>5</span></label>
                     </div>
-                </label>
-                <label>
-                    <input type="radio" name="satisfaction1" value="satisfied">
-                    <div class="emoji-container satisfied">
-                        <span class="emoji">🙂</span>
-                        <span class="text">Inkább igen</span>
+                </div>
+                <div class="rating-row">
+                    <div class="team-name">ByteBetyárok</div>
+                    <div class="rating-group">
+                        <label class="rating-option rate-1"><input type="radio" name="byteBetyarok" value="1"><span>1</span></label>
+                        <label class="rating-option rate-2"><input type="radio" name="byteBetyarok" value="2"><span>2</span></label>
+                        <label class="rating-option rate-3"><input type="radio" name="byteBetyarok" value="3"><span>3</span></label>
+                        <label class="rating-option rate-4"><input type="radio" name="byteBetyarok" value="4"><span>4</span></label>
+                        <label class="rating-option rate-5"><input type="radio" name="byteBetyarok" value="5"><span>5</span></label>
                     </div>
-                </label>
-                <label>
-                    <input type="radio" name="satisfaction1" value="very-satisfied">
-                    <div class="emoji-container very-satisfied">
-                        <span class="emoji">😀</span>
-                        <span class="text">Nagyon!</span>
+                </div>
+                <div class="rating-row">
+                    <div class="team-name">TalkReader</div>
+                    <div class="rating-group">
+                        <label class="rating-option rate-1"><input type="radio" name="talkReader" value="1"><span>1</span></label>
+                        <label class="rating-option rate-2"><input type="radio" name="talkReader" value="2"><span>2</span></label>
+                        <label class="rating-option rate-3"><input type="radio" name="talkReader" value="3"><span>3</span></label>
+                        <label class="rating-option rate-4"><input type="radio" name="talkReader" value="4"><span>4</span></label>
+                        <label class="rating-option rate-5"><input type="radio" name="talkReader" value="5"><span>5</span></label>
                     </div>
-                </label>
+                </div>
+                <div class="rating-row">
+                    <div class="team-name">TelePoci</div>
+                    <div class="rating-group">
+                        <label class="rating-option rate-1"><input type="radio" name="telePoci" value="1"><span>1</span></label>
+                        <label class="rating-option rate-2"><input type="radio" name="telePoci" value="2"><span>2</span></label>
+                        <label class="rating-option rate-3"><input type="radio" name="telePoci" value="3"><span>3</span></label>
+                        <label class="rating-option rate-4"><input type="radio" name="telePoci" value="4"><span>4</span></label>
+                        <label class="rating-option rate-5"><input type="radio" name="telePoci" value="5"><span>5</span></label>
+                    </div>
+                </div>
+                <div class="rating-row">
+                    <div class="team-name">pihenTECH</div>
+                    <div class="rating-group">
+                        <label class="rating-option rate-1"><input type="radio" name="pihenTECH" value="1"><span>1</span></label>
+                        <label class="rating-option rate-2"><input type="radio" name="pihenTECH" value="2"><span>2</span></label>
+                        <label class="rating-option rate-3"><input type="radio" name="pihenTECH" value="3"><span>3</span></label>
+                        <label class="rating-option rate-4"><input type="radio" name="pihenTECH" value="4"><span>4</span></label>
+                        <label class="rating-option rate-5"><input type="radio" name="pihenTECH" value="5"><span>5</span></label>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="keret">
-            <h2>Mennyire volt informatív ez a témakör az Ön számára?</h2>
-            <div class="options">
-                <label>
-                    <input type="radio" name="satisfaction2" value="very-unsatisfied">
-                    <div class="emoji-container very-unsatisfied">
-                        <span class="emoji">😠</span>
-                        <span class="text">Egyáltalán nem</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="radio" name="satisfaction2" value="not-satisfied">
-                    <div class="emoji-container not-satisfied">
-                        <span class="emoji">🙁</span>
-                        <span class="text">Inkább nem</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="radio" name="satisfaction2" value="satisfied">
-                    <div class="emoji-container satisfied">
-                        <span class="emoji">🙂</span>
-                        <span class="text">Inkább igen</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="radio" name="satisfaction2" value="very-satisfied">
-                    <div class="emoji-container very-satisfied">
-                        <span class="emoji">😀</span>
-                        <span class="text">Nagyon!</span>
-                    </div>
-                </label>
-            </div>
-        </div>
-
-        <div class="keret">
-            <h2>Mennyiben időszerű ez a téma?</h2>
-            <div class="options">
-                <label>
-                    <input type="radio" name="satisfaction3" value="very-unsatisfied">
-                    <div class="emoji-container very-unsatisfied">
-                        <span class="emoji">😠</span>
-                        <span class="text">Egyáltalán nem</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="radio" name="satisfaction3" value="not-satisfied">
-                    <div class="emoji-container not-satisfied">
-                        <span class="emoji">🙁</span>
-                        <span class="text">Inkább nem</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="radio" name="satisfaction3" value="satisfied">
-                    <div class="emoji-container satisfied">
-                        <span class="emoji">🙂</span>
-                        <span class="text">Inkább igen</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="radio" name="satisfaction3" value="very-satisfied">
-                    <div class="emoji-container very-satisfied">
-                        <span class="emoji">😀</span>
-                        <span class="text">Nagyon!</span>
-                    </div>
-                </label>
-            </div>
-        </div>
-
-        <div class="keret">
-            <h2>Mondja el véleményét! (Opcionális, max. 50 karakter)</h2>
-            <div class="opinion-field">
-                <textarea id="opinion" name="opinion" placeholder="Írja ide a véleményét..." maxlength="50"></textarea>
-            </div>
-        </div>
-
         <button id="submitButton" class="submit-button">Beküld</button>
     </div>
 
     <script>
         document.getElementById('submitButton').addEventListener('click', function() {
-            const satisfaction1 = document.querySelector('input[name="satisfaction1"]:checked');
-            const satisfaction2 = document.querySelector('input[name="satisfaction2"]:checked');
-            const satisfaction3 = document.querySelector('input[name="satisfaction3"]:checked');
-            const opinion = document.getElementById('opinion').value;
+            const bankiDual = document.querySelector('input[name="bankiDual"]:checked');
+            const bankiRobot = document.querySelector('input[name="bankiRobot"]:checked');
+            const byteBetyarok = document.querySelector('input[name="byteBetyarok"]:checked');
+            const talkReader = document.querySelector('input[name="talkReader"]:checked');
+            const telePoci = document.querySelector('input[name="telePoci"]:checked');
+            const pihenTECH = document.querySelector('input[name="pihenTECH"]:checked');
 
-            if (!satisfaction1 || !satisfaction2 || !satisfaction3) {
-                alert('Kérjük, válaszoljon minden kérdésre!');
-                return;
-            }
-
-            const badWords = ['szar', 'geci', 'fasz', 'kurva', 'baszd', 'bazdmeg', 'baszki', 'baszás',
-                'pina', 'punci', 'fing', 'segg', 'seggfej', 'fos', 'szopás', 'szopjál',
-                'bunkó', 'hülye', 'hülyeség', 'marha', 'marhaság', 'barom', 'faszfej',
-                'anyád', 'anyádat', 'apád', 'apádat', 'köcsög', 'köcsögség', 'picsa',
-                'ribanc', 'ringyó', 'rohadék', 'szaros', 'szarság', 'tahó',
-                'buzi', 'buzis', 'cigány', 'nigger', 'nyomorék', 'nyomorult', 'pöcs',
-                'pöcsfej', 'faszkalap', 'faszparaszt', 'gecis', 'kurvára', 'lófasz',
-                'baszódj', 'baszott', 'kibaszott', 'elbaszott', 'felbaszott',
-                'szarrágó', 'fospumpa', 'szopós', 'szopd', 'szopjad', 'bassza', 'basszus',
-                'faszom', 'faszba', 'faszt', 'faszért', 'fasznak', 'fasszopó',
-                'fasztarisznya', 'fasztolvaj', 'fingós', 'fostos', 'genny', 'gennyes',
-                'genyó', 'húgyagyú', 'hugyos', 'kretén', 'kreténség', 'kurafi',
-                'kurvapecér', 'lófaszt', 'lószar', 'mocsok', 'pöcsöm', 'pöcsbe',
-                'pöcsöt', 'pöcsért', 'pöcsnek', 'picsába', 'picsáért', 'picsának',
-                'fing', 'fingós', 'szarnivaló', 'szarzsák', 'szarházi', 'tökfej',
-                'tökkelütött', 'fater', 'muter', 'anyuci', 'apuci', 'anyucid',
-                'apucid', 'gyökér', 'gyoker', 'foshalmaz', 'szardarab', 'szarfaszú',
-                'picsafüst', 'faszfej', 'fasztarisznya', 'fasztengely', 'faszcibáló',
-                'bunkókám', 'faszkalap', 'faszkeringő', 'fasztarisznya', 'hülyegyerek'];
-
-            if (badWords.some(word => opinion.toLowerCase().includes(word))) {
-                alert('Kérlek, kulturáltan fejezd ki véleményed!');
+            if (!bankiDual || !bankiRobot || !byteBetyarok || !talkReader || !telePoci || !pihenTECH) {
+                alert('Kérjük, értékelje mind a 6 csapatot!');
                 return;
             }
 
             const data = {
-                satisfaction1: satisfaction1.value,
-                satisfaction2: satisfaction2.value,
-                satisfaction3: satisfaction3.value,
-                opinion: opinion
+                bankiDual: parseInt(bankiDual.value, 10),
+                bankiRobot: parseInt(bankiRobot.value, 10),
+                byteBetyarok: parseInt(byteBetyarok.value, 10),
+                talkReader: parseInt(talkReader.value, 10),
+                telePoci: parseInt(telePoci.value, 10),
+                pihenTECH: parseInt(pihenTECH.value, 10)
             };
 
-            fetch('/.netlify/functions/api/submit-survey/5', {
+            fetch('/submit-survey/5', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
