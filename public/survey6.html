@@ -314,37 +314,32 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
                 'bunkókám', 'faszkalap', 'faszkeringő', 'fasztarisznya', 'hülyegyerek'];
 
             if (badWords.some(word => opinion.toLowerCase().includes(word))) {
-                alert('Kérlek, kulturáltan fejezd ki véleményed!');
-                return;
-            }
+        alert('Kérlek, kulturáltan fejezd ki véleményed!');
+        return;
+    }
 
-            const data = {
-                satisfaction1: satisfaction1.value,
-                satisfaction2: satisfaction2.value,
-                satisfaction3: satisfaction3.value,
-                opinion: opinion
-            };
+    const data = {
+        satisfaction1: satisfaction1.value,
+        opinion: opinion
+    };
 
-            fetch('/.netlify/functions/api/submit-survey/6', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    window.location.href = '/results6.html';
-                } else {
-                    throw new Error('Sikertelen beküldés');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('Hiba történt a küldés során. Kérjük, próbálja újra később.');
-            });
-        });
-    </script>
-</body>
-</html>
+    fetch('/.netlify/functions/api/submit-survey/6', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            window.location.href = '/results6.html';
+        } else {
+            throw new Error('Sikertelen beküldés');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Hiba történt a küldés során. Kérjük, próbálja újra később.');
+    });
+});
