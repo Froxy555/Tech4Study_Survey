@@ -195,6 +195,7 @@
 
     <script>
         let chart;
+        const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? '' : '/.netlify/functions/api';
 
         function displayResults(results) {
             const ctx = document.getElementById('resultsChart').getContext('2d');
@@ -328,7 +329,7 @@
         }
 
         function fetchAndDisplayResults() {
-            fetch('/survey-results/2')
+            fetch(`${API_BASE}/survey-results/2`)
                 .then(response => response.json())
                 .then(results => {
                     if (results.error) {
