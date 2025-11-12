@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="tech4study" href="kislogo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>II. Technológiai Innovációs Konferencia 2024. - Eredmények</title>
+    <title>III. Technológiai Innovációs Konferencia 2025. - Eredmények</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -181,11 +181,6 @@
         <div class="chart-container">
             <canvas id="resultsChart"></canvas>
         </div>
-
-        <div class="opinions-container">
-            <h2>Vélemények</h2>
-            <div id="opinionsContainer"></div>
-        </div>
     </div>
 
     <script>
@@ -194,28 +189,31 @@
         function displayResults(results) {
             const ctx = document.getElementById('resultsChart').getContext('2d');
 
+            const labels = ['BankiDual', 'BánkiRobot', 'ByteBetyárok', 'TalkReader', 'TelePoci', 'pihenTECH'];
+            const arrays = [
+                results.bankiDual || [],
+                results.bankiRobot || [],
+                results.byteBetyarok || [],
+                results.talkReader || [],
+                results.telePoci || [],
+                results.pihenTECH || []
+            ];
+            const avgs = arrays.map(arr => {
+                if (!arr || arr.length === 0) return 0;
+                const nums = arr.map(x => parseInt(x, 10)).filter(n => !isNaN(n));
+                if (nums.length === 0) return 0;
+                const sum = nums.reduce((a, b) => a + b, 0);
+                return (sum / nums.length).toFixed(2);
+            });
+
             const data = {
-                labels: ['Nagyon!', 'Inkább igen', 'Inkább nem', 'Egyáltalán nem'],
+                labels,
                 datasets: [
                     {
-                        label: 'Téma',
-                        data: countResponses(results.satisfaction1 || []),
-                        backgroundColor: 'rgba(46, 139, 87, 0.7)',
-                        borderColor: 'rgba(46, 139, 87, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Informatív',
-                        data: countResponses(results.satisfaction2 || []),
-                        backgroundColor: 'rgba(60, 179, 113, 0.7)',
-                        borderColor: 'rgba(60, 179, 113, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Időszerű',
-                        data: countResponses(results.satisfaction3 || []),
-                        backgroundColor: 'rgba(144, 238, 144, 0.7)',
-                        borderColor: 'rgba(144, 238, 144, 1)',
+                        label: 'Átlagos értékelés (1-5)',
+                        data: avgs,
+                        backgroundColor: 'rgba(193,218,98,0.85)',
+                        borderColor: 'rgba(193,218,98,1)',
                         borderWidth: 1
                     }
                 ]
@@ -227,49 +225,26 @@
                 scales: {
                     y: {
                         beginAtZero: true,
+                        suggestedMax: 5,
                         ticks: {
-                            color: 'rgba(255, 255, 255, 0.8)',
-                            font: {
-                                family: "'Montserrat', sans-serif",
-                                size: 10
-                            }
+                            stepSize: 1,
+                            color: 'rgba(255, 255, 255, 0.8)'
                         },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'
                         }
                     },
                     x: {
-                        ticks: {
-                            color: 'rgba(255, 255, 255, 0.8)',
-                            font: {
-                                family: "'Montserrat', sans-serif",
-                                size: 10
-                            }
-                        },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        }
+                        ticks: { color: 'rgba(255, 255, 255, 0.8)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
                     }
                 },
                 plugins: {
-                    legend: {
-                        labels: {
-                            color: 'rgba(255, 255, 255, 0.8)',
-                            font: {
-                                family: "'Montserrat', sans-serif",
-                                size: 12
-                            }
-                        }
-                    },
+                    legend: { labels: { color: 'rgba(255, 255, 255, 0.8)' } },
                     title: {
                         display: true,
-                        text: 'Elégedettségi Felmérés Eredményei',
-                        color: 'rgba(255, 255, 255, 0.9)',
-                        font: {
-                            family: "'Montserrat', sans-serif",
-                            size: 16,
-                            weight: 'bold'
-                        }
+                        text: 'Csapatok átlagos értékelése (1-5)',
+                        color: 'rgba(255, 255, 255, 0.9)'
                     }
                 }
             };
@@ -284,37 +259,10 @@
                 options: options
             });
 
-            const opinionsContainer = document.getElementById('opinionsContainer');
-            opinionsContainer.innerHTML = '';
-            if (results.opinions && results.opinions.length > 0) {
-                results.opinions.forEach(opinion => {
-                    const opinionElement = document.createElement('div');
-                    opinionElement.className = 'opinion';
-                    opinionElement.textContent = opinion;
-                    opinionsContainer.appendChild(opinionElement);
-                });
-            } else {
-                opinionsContainer.textContent = 'Még nincsenek vélemények.';
-            }
-        }
-
-        function countResponses(responses) {
-            const counts = {
-                'very-satisfied': 0,
-                'satisfied': 0,
-                'not-satisfied': 0,
-                'very-unsatisfied': 0
-            };
-
-            responses.forEach(response => {
-                counts[response] = (counts[response] || 0) + 1;
-            });
-
-            return Object.values(counts);
         }
 
         function fetchAndDisplayResults() {
-            fetch('/.netlify/functions/api/survey-results/5')
+            fetch('/survey-results/5')
                 .then(response => response.json())
                 .then(results => {
                     if (results.error) {
