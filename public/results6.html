@@ -196,6 +196,29 @@
 
             const data = {
                 labels: ['Nagyon!', 'Inkább igen', 'Inkább nem', 'Egyáltalán nem'],
+                datasets: [
+                    {
+                        label: 'Téma',
+                        data: countResponses(results.satisfaction1 || []),
+                        backgroundColor: 'rgba(46, 139, 87, 0.7)',
+                        borderColor: 'rgba(46, 139, 87, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Informatív',
+                        data: countResponses(results.satisfaction2 || []),
+                        backgroundColor: 'rgba(60, 179, 113, 0.7)',
+                        borderColor: 'rgba(60, 179, 113, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Időszerű',
+                        data: countResponses(results.satisfaction3 || []),
+                        backgroundColor: 'rgba(144, 238, 144, 0.7)',
+                        borderColor: 'rgba(144, 238, 144, 1)',
+                        borderWidth: 1
+                    }
+                ]
                 
             };
 
