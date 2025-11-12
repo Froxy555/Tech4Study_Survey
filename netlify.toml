@@ -3,7 +3,23 @@
   publish = "public"
   functions = "functions"
 
+# API redirectek - ezeknek ELŐBB kell lenniük!
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# SPA redirect - ez legyen az UTOLSÓ!
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
+  conditions = {Role = ["guest"]}
+  
+# Vagy egyszerűbben, csak a nem-létező fájlokra:
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
+#   force = false
