@@ -238,6 +238,20 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
         <h2 style="text-align: center; margin-bottom: 30px;">TECHskills – tudatos képességfejlesztés</h2>
         
         <div class="keret">
+            <h2>Melyik előadás tetszett a legjobban?</h2>
+            <div>
+                <select id="favoriteTalk" style="width:100%; padding:10px; border:1px solid var(--main-purple); border-radius:5px; font-family:'Montserrat', sans-serif;">
+                    <option value="">Válasszon egy előadást...</option>
+                    <option value="dr. Szászi István, fővédnöki előadás, a Bosch csoport vezetője Magyarországon és az Adria régióban">dr. Szászi István</option>
+                    <option value="Reményi Gábor, Emerson, szakképzési vezetője (Cím: Amikor a cégek képzik a szakmára a fiatalokat - duális tapasztalatok)">Reményi Gábor</option>
+                    <option value="Gere Attila, Óbudai Egyetem, automatizálási mérnök (Cím: Nullákból és egyesekből valóságot teremteni – ez a mérnöki mágia. Milyen a mérnöki élet, a robotok és terepmunka?)">Gere Attila</option>
+                    <option value="Molnárné Dr. László Andrea, MI tananyagkészítő, oktatáskutató, AI tanácsadó (Cím: AI használata az iskolarendszerű és a munkahelyi képzésben. A bizalom és kételkedés pedagógiája)">Molnárné Dr. László Andrea</option>
+                    <option value="Huszár István, A Nyíregyházi Szakképzési Centrum AI nagykövete (Cím: A mesterséges intelligencia bevezetése az oktatásba)">Huszár István</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="keret">
             <h2> Mennyire volt elégedett a témaválasztással?</h2>
             <div class="options">
                 <label>
@@ -340,9 +354,9 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
         </div>
 
         <div class="keret">
-            <h2>Mondja el véleményét! (Opcionális, max. 50 karakter)</h2>
+            <h2>Miért az tetszett a legjobban?</h2>
             <div class="opinion-field">
-                <textarea id="opinion" name="opinion" placeholder="Írja ide a véleményét..." maxlength="50"></textarea>
+                <textarea id="opinion" name="opinion" placeholder="Ird meg itt röviden" maxlength="50"></textarea>
             </div>
         </div>
 
@@ -351,13 +365,14 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
 
     <script>
         document.getElementById('submitButton').addEventListener('click', function() {
+            const favoriteTalk = document.getElementById('favoriteTalk').value;
             const satisfaction1 = document.querySelector('input[name="satisfaction1"]:checked');
             const satisfaction2 = document.querySelector('input[name="satisfaction2"]:checked');
             const satisfaction3 = document.querySelector('input[name="satisfaction3"]:checked');
             const opinion = document.getElementById('opinion').value;
 
-            if (!satisfaction1 || !satisfaction2 || !satisfaction3) {
-                alert('Kérjük, válaszoljon minden kérdésre!');
+            if (!favoriteTalk || !satisfaction1 || !satisfaction2 || !satisfaction3) {
+                alert('Kérjük, válaszoljon minden kötelező kérdésre!');
                 return;
             }
 
@@ -387,13 +402,14 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
             }
 
             const data = {
+                favoriteTalk: favoriteTalk,
                 satisfaction1: satisfaction1.value,
                 satisfaction2: satisfaction2.value,
                 satisfaction3: satisfaction3.value,
                 opinion: opinion
             };
 
-            fetch('/.netlify/functions/api/submit-survey/1', {
+            fetch('/submit-survey/1', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
