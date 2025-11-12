@@ -282,64 +282,63 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
     </div>
 
     <script>
-        document.getElementById('submitButton').addEventListener('click', function() {
-            const satisfaction1 = document.querySelector('input[name="satisfaction1"]:checked');
-            const opinion = document.getElementById('opinion').value;
-        
-            if (!satisfaction1) {
-                alert('Kérlek, válaszolj a kérdésre!');
-                return;
+    document.getElementById('submitButton').addEventListener('click', function() {
+        const satisfaction1 = document.querySelector('input[name="satisfaction1"]:checked');
+        const opinion = document.getElementById('opinion').value;
+    
+        if (!satisfaction1) {
+            alert('Kérlek, válaszolj a kérdésre!');
+            return;
         }
 
-            
+        const badWords = ['szar', 'geci', 'fasz', 'kurva', 'baszd', 'bazdmeg', 'baszki', 'baszás',
+            'pina', 'punci', 'fing', 'segg', 'seggfej', 'fos', 'szopás', 'szopjál',
+            'bunkó', 'hülye', 'hülyeség', 'marha', 'marhaság', 'barom', 'faszfej',
+            'anyád', 'anyádat', 'apád', 'apádat', 'köcsög', 'köcsögség', 'picsa',
+            'ribanc', 'ringyó', 'rohadék', 'szaros', 'szarság', 'tahó',
+            'buzi', 'buzis', 'cigány', 'nigger', 'nyomorék', 'nyomorult', 'pöcs',
+            'pöcsfej', 'faszkalap', 'faszparaszt', 'gecis', 'kurvára', 'lófasz',
+            'baszódj', 'baszott', 'kibaszott', 'elbaszott', 'felbaszott',
+            'szarrágó', 'fospumpa', 'szopós', 'szopd', 'szopjad', 'bassza', 'basszus',
+            'faszom', 'faszba', 'faszt', 'faszért', 'fasznak', 'fasszopó',
+            'fasztarisznya', 'fasztolvaj', 'fingós', 'fostos', 'genny', 'gennyes',
+            'genyó', 'húgyagyú', 'hugyos', 'kretén', 'kreténség', 'kurafi',
+            'kurvapecér', 'lófaszt', 'lószar', 'mocsok', 'pöcsöm', 'pöcsbe',
+            'pöcsöt', 'pöcsért', 'pöcsnek', 'picsába', 'picsáért', 'picsának',
+            'fing', 'fingós', 'szarnivaló', 'szarzsák', 'szarházi', 'tökfej',
+            'tökkelütött', 'fater', 'muter', 'anyuci', 'apuci', 'anyucid',
+            'apucid', 'gyökér', 'gyoker', 'foshalmaz', 'szardarab', 'szarfaszú',
+            'picsafüst', 'faszfej', 'fasztarisznya', 'fasztengely', 'faszcibáló',
+            'bunkókám', 'faszkalap', 'faszkeringő', 'fasztarisznya', 'hülyegyerek'];
 
-            const badWords = ['szar', 'geci', 'fasz', 'kurva', 'baszd', 'bazdmeg', 'baszki', 'baszás',
-                'pina', 'punci', 'fing', 'segg', 'seggfej', 'fos', 'szopás', 'szopjál',
-                'bunkó', 'hülye', 'hülyeség', 'marha', 'marhaság', 'barom', 'faszfej',
-                'anyád', 'anyádat', 'apád', 'apádat', 'köcsög', 'köcsögség', 'picsa',
-                'ribanc', 'ringyó', 'rohadék', 'szaros', 'szarság', 'tahó',
-                'buzi', 'buzis', 'cigány', 'nigger', 'nyomorék', 'nyomorult', 'pöcs',
-                'pöcsfej', 'faszkalap', 'faszparaszt', 'gecis', 'kurvára', 'lófasz',
-                'baszódj', 'baszott', 'kibaszott', 'elbaszott', 'felbaszott',
-                'szarrágó', 'fospumpa', 'szopós', 'szopd', 'szopjad', 'bassza', 'basszus',
-                'faszom', 'faszba', 'faszt', 'faszért', 'fasznak', 'fasszopó',
-                'fasztarisznya', 'fasztolvaj', 'fingós', 'fostos', 'genny', 'gennyes',
-                'genyó', 'húgyagyú', 'hugyos', 'kretén', 'kreténség', 'kurafi',
-                'kurvapecér', 'lófaszt', 'lószar', 'mocsok', 'pöcsöm', 'pöcsbe',
-                'pöcsöt', 'pöcsért', 'pöcsnek', 'picsába', 'picsáért', 'picsának',
-                'fing', 'fingós', 'szarnivaló', 'szarzsák', 'szarházi', 'tökfej',
-                'tökkelütött', 'fater', 'muter', 'anyuci', 'apuci', 'anyucid',
-                'apucid', 'gyökér', 'gyoker', 'foshalmaz', 'szardarab', 'szarfaszú',
-                'picsafüst', 'faszfej', 'fasztarisznya', 'fasztengely', 'faszcibáló',
-                'bunkókám', 'faszkalap', 'faszkeringő', 'fasztarisznya', 'hülyegyerek'];
-
-            if (badWords.some(word => opinion.toLowerCase().includes(word))) {
-        alert('Kérlek, kulturáltan fejezd ki véleményed!');
-        return;
-    }
-
-    const data = {
-        satisfaction1: satisfaction1.value,
-        opinion: opinion
-    };
-
-    fetch('/.netlify/functions/api/submit-survey/6', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            window.location.href = '/results6.html';
-        } else {
-            throw new Error('Sikertelen beküldés');
+        if (badWords.some(word => opinion.toLowerCase().includes(word))) {
+            alert('Kérlek, kulturáltan fejezd ki véleményed!');
+            return;
         }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        alert('Hiba történt a küldés során. Kérjük, próbálja újra később.');
+
+        const data = {
+            satisfaction1: satisfaction1.value,
+            opinion: opinion
+        };
+
+        fetch('/.netlify/functions/api/submit-survey/6', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                window.location.href = '/results6.html';
+            } else {
+                throw new Error('Sikertelen beküldés');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Hiba történt a küldés során. Kérjük, próbálja újra később.');
+        });
     });
-});
+</script>
