@@ -8,19 +8,22 @@ exports.handler = async (event, context) => {
   try {
     await client.connect();
     const database = client.db('survey_database');
-
+    
     if (event.httpMethod === 'POST' && event.path.startsWith('/.netlify/functions/api/submit-survey/')) {
       const surveyNumber = event.path.split('/').pop();
-      const surveys = database.collection(`surveys${surveyNumber}`);
+      const surveys = database.collection(`surveys${surveyNumber}`); // JAVÍTVA: ` helyett (
       const surveyData = JSON.parse(event.body);
+      
       await surveys.insertOne(surveyData);
+      
       return {
         statusCode: 200,
         body: JSON.stringify({ success: true })
       };
     } else if (event.httpMethod === 'GET' && event.path.startsWith('/.netlify/functions/api/survey-results/')) {
       const surveyNumber = event.path.split('/').pop();
-      const surveys = database.collection(`surveys${surveyNumber}`);
+      const surveys = database.collection(`surveys${surveyNumber}`); // JAVÍTVA: ` helyett (
+      
       const pipeline = (surveyNumber === '5')
         ? [
             {
@@ -66,24 +69,24 @@ exports.handler = async (event, context) => {
               }
             }
           ];
-
+      
       const [aggregateResults, opinions] = await Promise.all([
         surveys.aggregate(pipeline).toArray(),
         surveys.find({opinion: {$exists: true, $ne: ""}}, {projection: {_id: 0, opinion: 1}}).toArray()
       ]);
-
+      
       const results = aggregateResults[0] || (surveyNumber === '5'
         ? { bankiDual: [], bankiRobot: [], byteBetyarok: [], talkReader: [], telePoci: [], pihenTECH: [] }
         : { satisfaction1: [], satisfaction2: [], satisfaction3: [], favoriteTalk: [] }
       );
       results.opinions = (surveyNumber === '5') ? [] : opinions.map(doc => doc.opinion);
-
+      
       return {
         statusCode: 200,
         body: JSON.stringify(results)
       };
     }
-
+    
     return {
       statusCode: 404,
       body: JSON.stringify({ error: 'Not found' })
