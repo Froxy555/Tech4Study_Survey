@@ -35,6 +35,11 @@
         .logo {
             height: 40px;
             width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .fooldal-button {
@@ -65,6 +70,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+            box-sizing: border-box;
         }
 
         h1 {
@@ -82,38 +88,6 @@
             font-weight: 700;
         }
 
-        .options {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        label {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            margin: 10px;
-            flex: 1 1 20%;
-            min-width: 80px;
-            position: relative;
-        }
-
-        /* Default radios hidden for emoji blocks; rating section overrides this */
-        input[type="radio"] {
-            display: none;
-        }
-
-        .emoji-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-            border-radius: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        /* Rating rows (survey5) */
         .rating-row {
             display: flex;
             align-items: center;
@@ -121,12 +95,16 @@
             padding: 5px 0;
             border-bottom: 1px solid #e8e8e8;
         }
+
         .rating-row:last-child { border-bottom: none; }
+
         .team-name {
             font-weight: 700;
             color: var(--main-purple);
         }
+
         .rating-group { display: flex; gap: 10px; }
+
         .rating-option {
             display: inline-flex !important;
             align-items: center;
@@ -134,7 +112,9 @@
             margin: 0;
             flex: 0 0 auto;
         }
+
         .rating-option input[type="radio"] { display: none !important; }
+
         .rating-option span {
             display: inline-flex;
             align-items: center;
@@ -148,44 +128,22 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.06);
             transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
         }
-        .rating-option:hover span { transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
-        .rating-option input[type="radio"]:checked + span { border: 2px solid var(--main-purple); box-shadow: 0 0 0 2px rgba(83,81,158,0.15); }
+
+        .rating-option:hover span { 
+            transform: translateY(-1px); 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12); 
+        }
+
+        .rating-option input[type="radio"]:checked + span { 
+            border: 2px solid var(--main-purple); 
+            box-shadow: 0 0 0 2px rgba(83,81,158,0.15); 
+        }
+
         .rating-option.rate-1 span { background-color: #e9f2cd; }
         .rating-option.rate-2 span { background-color: #dce9a8; }
         .rating-option.rate-3 span { background-color: #cfe083; }
         .rating-option.rate-4 span { background-color: #c2d75e; }
         .rating-option.rate-5 span { background-color: #9ec43f; color: #1b2b16; }
-
-        .emoji {
-            font-size: 2em;
-            margin-bottom: 5px;
-            transition: transform 0.2s ease;
-        }
-
-        label:hover .emoji {
-            transform: scale(1.1);
-        }
-
-        .text {
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        input[type="radio"]:checked + .emoji-container.very-satisfied {
-            background-color: #c2d75e;
-        }
-
-        input[type="radio"]:checked + .emoji-container.satisfied {
-            background-color: #cfe083;
-        }
-
-        input[type="radio"]:checked + .emoji-container.not-satisfied {
-            background-color: #dce9a8;
-        }
-
-        input[type="radio"]:checked + .emoji-container.very-unsatisfied {
-            background-color: #e9f2cd;
-        }
 
         .submit-button {
             display: block;
@@ -200,96 +158,90 @@
             transition: background-color 0.3s ease;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
+            margin-top: 15px;
         }
 
         .submit-button:hover {
             background-color: var(--light-green);
         }
 
-        .opinion-field textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--main-purple);
-            border-radius: 5px;
-            font-size: 1rem;
-            resize: vertical;
-            min-height: 100px;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .logo-link {
-            text-decoration: none;
-        }
-
-        .logo {
-            height: 40px;
-            width: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
+        /* ===== MOBILNÉZET JAVÍTÁS ===== */
         @media (max-width: 600px) {
-            h1 {
-                font-size: 1.3em;
-                padding: 0 10px;
+            body {
+                overflow-x: hidden;
             }
-            h2 {
-                font-size: 1em;
-                padding: 0 10px;
-            }
-            .emoji {
-                font-size: 1.8em;
-            }
-            .text {
-                font-size: 0.8rem;
-            }
-            .options {
-                justify-content: space-around;
-            }
-            label {
-                flex: 1 1 40%;
-            }
-            
-            /* Rating section mobile improvements */
-            .rating-row {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 15px 10px;
-                gap: 8px;
-            }
-            .team-name {
-                font-size: 1.1em;
-                text-align: center;
-                margin-bottom: 5px;
-            }
-            .rating-group {
-                justify-content: center;
-                gap: 8px;
-            }
-            .rating-option span {
-                width: 44px;
-                height: 40px;
-                font-size: 1.1em;
-            }
-            .keret {
-                padding: 15px 10px;
-            }
-            .container {
-                padding: 15px 10px;
-            }
+
             header {
                 padding: 0.8rem;
             }
+
             .logo {
                 height: 32px;
             }
+
             .fooldal-button {
                 padding: 0.4rem 1rem;
                 font-size: 0.9em;
+            }
+
+            .container {
+                width: 100%;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+
+            .keret {
+                padding: 15px;
+                margin: 10px;
+                box-sizing: border-box;
+                overflow-x: hidden;
+            }
+
+            .rating-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 0;
+            }
+
+            .team-name {
+                font-size: 1em;
+                text-align: center;
+                word-wrap: break-word;
+            }
+
+            .rating-group {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .rating-option span {
+                width: 40px;
+                height: 38px;
+                font-size: 1em;
+                border-radius: 10px;
+            }
+
+            h1 {
+                font-size: 1.3em;
+                text-align: center;
+                margin: 10px 0;
+            }
+
+            h2 {
+                font-size: 1em;
+                text-align: center;
+                margin: 8px 0;
+            }
+
+            .submit-button {
+                font-size: 1em;
+                padding: 12px;
+                margin-top: 15px;
+                width: 100%;
+                box-sizing: border-box;
             }
         }
     </style>
