@@ -118,7 +118,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 8px 0;
+            padding: 5px 0;
             border-bottom: 1px solid #e8e8e8;
         }
         .rating-row:last-child { border-bottom: none; }
@@ -172,21 +172,20 @@
         }
 
         input[type="radio"]:checked + .emoji-container.very-satisfied {
-    background-color: #c2d75e;
-}
+            background-color: #c2d75e;
+        }
 
-input[type="radio"]:checked + .emoji-container.satisfied {
-    background-color: #cfe083;
-}
+        input[type="radio"]:checked + .emoji-container.satisfied {
+            background-color: #cfe083;
+        }
 
-input[type="radio"]:checked + .emoji-container.not-satisfied {
-    background-color: #dce9a8;
-}
+        input[type="radio"]:checked + .emoji-container.not-satisfied {
+            background-color: #dce9a8;
+        }
 
-input[type="radio"]:checked + .emoji-container.very-unsatisfied {
-    background-color: #e9f2cd;
-}
-
+        input[type="radio"]:checked + .emoji-container.very-unsatisfied {
+            background-color: #e9f2cd;
+        }
 
         .submit-button {
             display: block;
@@ -219,12 +218,28 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
             font-family: 'Montserrat', sans-serif;
         }
 
+        .logo-link {
+            text-decoration: none;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
         @media (max-width: 600px) {
             h1 {
-                font-size: 1.5em;
+                font-size: 1.3em;
+                padding: 0 10px;
             }
             h2 {
-                font-size: 1.1em;
+                font-size: 1em;
+                padding: 0 10px;
             }
             .emoji {
                 font-size: 1.8em;
@@ -238,35 +253,45 @@ input[type="radio"]:checked + .emoji-container.very-unsatisfied {
             label {
                 flex: 1 1 40%;
             }
+            
+            /* Rating section mobile improvements */
+            .rating-row {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 15px 10px;
+                gap: 8px;
+            }
+            .team-name {
+                font-size: 1.1em;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+            .rating-group {
+                justify-content: center;
+                gap: 8px;
+            }
+            .rating-option span {
+                width: 44px;
+                height: 40px;
+                font-size: 1.1em;
+            }
+            .keret {
+                padding: 15px 10px;
+            }
+            .container {
+                padding: 15px 10px;
+            }
+            header {
+                padding: 0.8rem;
+            }
+            .logo {
+                height: 32px;
+            }
+            .fooldal-button {
+                padding: 0.4rem 1rem;
+                font-size: 0.9em;
+            }
         }
-        .logo-link {
-    text-decoration: none;
-}
-
-.logo {
-    height: 40px;
-    width: auto;
-    transition: transform 0.3s ease;
-}
-
-.logo:hover {
-    transform: scale(1.05);
-}
-
-.fooldal-button {
-    background-color: var(--main-purple);
-    color: white;
-    padding: 0.5rem 1.5rem;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.fooldal-button:hover {
-    background-color: var(--light-green);
-}
-
     </style>
 </head>
 <body>
